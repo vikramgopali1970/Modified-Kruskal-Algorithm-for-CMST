@@ -4,15 +4,11 @@ import java.util.HashSet;
 
 public class Vertex {
     int name;
-    int weight;
-    int subTreeGroupWeight;
     Vertex parent;
     HashSet<Vertex> subTreeGroup;
 
     public Vertex(int name){
         this.name = name;
-        this.weight = (name == 0)?0:1;
-        this.subTreeGroupWeight = this.weight;
         this.parent = null;
         this.subTreeGroup = new HashSet<Vertex>();
         this.subTreeGroup.add(this);

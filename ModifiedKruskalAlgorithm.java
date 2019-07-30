@@ -53,18 +53,28 @@ public class ModifiedKruskalAlgorithm {
         return v;
     }
 
+    private void updateSubTree(Vertex parent){
+        for(Vertex v : parent.subTreeGroup){
+            if(!parent.equals(v)){
+                v.subTreeGroup = parent.subTreeGroup;
+            }
+        }
+    }
+
     private boolean union(Edge e){
         Vertex u = this.findParent(e.from);
         Vertex v = this.findParent(e.to);
-        if(((e.from.name == 0 || e.to.name == 0) || (u.subTreeGroup.size() < graph.getWeight()) && (v.subTreeGroup.size() < graph.getWeight()))){
+        if(((e.from.name == 0 || e.to.name == 0) || ((e.from.subTreeGroup.size() < graph.getWeight()) && (e.to.subTreeGroup.size() < graph.getWeight())))){
             if(u.name < v.name){
-                v.parent = u;
+                e.to.parent = e.from;
             }else{
-                u.parent = v;
+                e.from.parent = e.to;
             }
             System.out.println("Adding edge "+e);
-            u.subTreeGroup.addAll(v.subTreeGroup);
-            v.subTreeGroup.addAll(u.subTreeGroup);
+            if((e.from.name != 0 && e.to.name != 0)){
+                e.from.subTreeGroup.addAll(e.to.subTreeGroup);
+                updateSubTree(e.from);
+            }
             return true;
         }else{
             System.out.println("Skipping edge "+e);
@@ -101,7 +111,37 @@ public class ModifiedKruskalAlgorithm {
 2 3 8
 
 
-here is 0 -15-> 5 0 4
-Skipping edge 0 -15-> 5
+7
+0
+1
+2
+3
+4
+5
+6
+
+
+21
+0 1 5
+0 2 6
+0 3 9
+0 4 10
+0 5 11
+0 6 15
+1 2 9
+1 3 6
+1 4 6
+1 5 8
+1 6 17
+2 3 7
+2 4 9
+2 5 8
+2 6 12
+3 4 10
+3 5 5
+3 6 11
+4 5 14
+4 6 9
+5 6 8
 
 * */
