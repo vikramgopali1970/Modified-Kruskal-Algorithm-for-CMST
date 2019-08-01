@@ -13,7 +13,7 @@ public class Graph {
     HashSet<Edge> edges;                                    // Collection of all edges
     HashMap<Vertex, HashSet<Edge>> adjList;                 // Adjacency List of Graph
     HashSet<Edge> cmst;                                     // The CMST edges
-    HashSet<Vertex> visited;
+    HashSet<Vertex> visited;                                // keep track of visited nodes
 
     public Graph(){
         this.adjList = new HashMap<Vertex, HashSet<Edge>>();
@@ -23,10 +23,16 @@ public class Graph {
         this.visited = new HashSet<Vertex>();
     }
 
+    /**
+     * This method is used to accept user Weight constraint.
+     * */
     public int getWeight() {
         return weight;
     }
 
+    /**
+     * This method is used to accept user Weight constraint.
+     * */
     public void setWeight() {
         System.out.println("Enter the value of W, maximum weight the subtree can have.");
         Scanner sc = new Scanner(System.in);
