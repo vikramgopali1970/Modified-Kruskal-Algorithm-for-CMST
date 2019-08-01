@@ -9,10 +9,10 @@ public class Graph {
 
     private int weight;
 
-    HashMap<Integer, Vertex> vertex;                         // Map names to vertices
+    HashMap<Integer, Vertex> vertex;                        // Map names to vertices
     HashSet<Edge> edges;                                    // Collection of all edges
     HashMap<Vertex, HashSet<Edge>> adjList;                 // Adjacency List of Graph
-    HashSet<Edge> cmst;
+    HashSet<Edge> cmst;                                     // The CMST edges
     HashSet<Vertex> visited;
 
     public Graph(){
@@ -27,8 +27,10 @@ public class Graph {
         return weight;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void setWeight() {
+        System.out.println("Enter the value of W, maximum weight the subtree can have.");
+        Scanner sc = new Scanner(System.in);
+        this.weight = sc.nextInt();
     }
 
     /**
@@ -40,7 +42,8 @@ public class Graph {
         int n = sc.nextInt();
         for(int i=0;i<n;i++){
             int num = sc.nextInt();
-            Vertex inpV = new Vertex(num);
+            int weight = sc.nextInt();
+            Vertex inpV = new Vertex(num,weight);
             this.vertex.put(num, inpV);
             this.adjList.put(inpV, new HashSet<Edge>());
         }
@@ -52,7 +55,7 @@ public class Graph {
      * */
     public void getEdges(){
         Scanner sc = new Scanner(System.in);
-        System.out.println("enter the number of vertices");
+        System.out.println("enter the number of edges");
         int m = sc.nextInt();
         for(int i=0;i<m;i++){
             int f = sc.nextInt();
@@ -85,12 +88,12 @@ public class Graph {
 /*
 
 6
-0
-1
-2
-3
-4
-5
+0 0
+1 1
+2 1
+3 1
+4 1
+5 1
 
 15
 0 2 6

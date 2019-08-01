@@ -4,14 +4,16 @@ import java.util.HashSet;
 
 public class Vertex {
     int name;
-    Vertex parent;
-    HashSet<Vertex> subTreeGroup;
+    Vertex parent;                                  // stores the parent of current vertex
+    HashSet<Vertex> subTreeGroup;                   // stores the subtree along with nodes to which it belongs
+    int weightSubTree;                              // used to store the weight of the subtree to which it belongs
 
-    public Vertex(int name){
+    public Vertex(int name, int weightSubTree){
         this.name = name;
         this.parent = null;
         this.subTreeGroup = new HashSet<Vertex>();
         this.subTreeGroup.add(this);
+        this.weightSubTree = weightSubTree;
     }
 
     /**

@@ -12,6 +12,9 @@ public class ModifiedKruskalAlgorithm {
         this.graph = graph;
     }
 
+    /**
+     * This method is used to obtain the CMST for the given graph.
+     */
     public void modifiedKruskal(){
         PriorityQueue<Edge> pq = new PriorityQueue<Edge>(new Comparator<Edge>() {
             @Override
@@ -46,6 +49,12 @@ public class ModifiedKruskalAlgorithm {
         System.out.println("the Tree has following edges"+graph.cmst);
     }
 
+    /**
+     * This method is used to find the parent of the subtree the vertex belongs in the graph.
+     *
+     * @param v the vertex whose parent is needs to be found in the subtree of v
+     * @return the parent of vertex in its subtree
+     */
     private Vertex findParent(Vertex v){
         while(v.parent != null){
             v = v.parent;
@@ -53,18 +62,31 @@ public class ModifiedKruskalAlgorithm {
         return v;
     }
 
+    /**
+     * This method is used to update the weights of the nodes and subtrees to which a new node is added.
+     *
+     * @param parent the vertex which contains all the inupdated information of the new subtree formed, used to update
+     *               the remaining vertices in the subtree
+     */
     private void updateSubTree(Vertex parent){
         for(Vertex v : parent.subTreeGroup){
             if(!parent.equals(v)){
                 v.subTreeGroup = parent.subTreeGroup;
+                v.weightSubTree = parent.weightSubTree;
             }
         }
     }
 
+    /**
+     * This method is used to perform union of 2 vertices, based on the constraints set for the network.
+     *
+     * @param e the edge which needs to be added to the subtree and perform union of vertices.
+     * @return  boolean value as to whether the union was successful or not based on the constraints.
+     */
     private boolean union(Edge e){
         Vertex u = this.findParent(e.from);
         Vertex v = this.findParent(e.to);
-        if(((e.from.name == 0 || e.to.name == 0) || ((e.from.subTreeGroup.size() < graph.getWeight()) && (e.to.subTreeGroup.size() < graph.getWeight())))){
+        if(((e.from.name == 0 || e.to.name == 0) || ((e.from.weightSubTree < graph.getWeight()) && (e.from.weightSubTree + e.to.weightSubTree <= this.graph.getWeight()) && (e.to.weightSubTree < graph.getWeight())))){
             if(u.name < v.name){
                 e.to.parent = e.from;
             }else{
@@ -73,6 +95,7 @@ public class ModifiedKruskalAlgorithm {
             System.out.println("Adding edge "+e);
             if((e.from.name != 0 && e.to.name != 0)){
                 e.from.subTreeGroup.addAll(e.to.subTreeGroup);
+                e.from.weightSubTree += e.to.weightSubTree;
                 updateSubTree(e.from);
             }
             return true;
@@ -86,12 +109,12 @@ public class ModifiedKruskalAlgorithm {
 /*
 
 6
-0
-1
-2
-3
-4
-5
+0 0
+1 1
+2 1
+3 1
+4 1
+5 1
 
 15
 0 2 6
@@ -112,13 +135,13 @@ public class ModifiedKruskalAlgorithm {
 
 
 7
-0
-1
-2
-3
-4
-5
-6
+0 0
+1 1
+2 1
+3 2
+4 1
+5 1
+6 1
 
 
 21

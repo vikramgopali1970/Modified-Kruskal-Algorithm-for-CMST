@@ -5,7 +5,7 @@ public class Main {
         Graph graph = new Graph();
         graph.getVertices();
         graph.getEdges();
-        graph.setWeight(3);
+        graph.setWeight();
         ModifiedKruskalAlgorithm mka = new ModifiedKruskalAlgorithm(graph);
         mka.modifiedKruskal();
     }
